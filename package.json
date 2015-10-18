@@ -1,5 +1,5 @@
 {
-  "name": "reflection",
+  "name": "reflection-js",
   "version": "0.1.0",
   "description": "Module reflection API for nodejs",
   "main": "start.js",
