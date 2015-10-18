@@ -1,0 +1,27 @@
+{
+  "name": "reflection",
+  "version": "0.1.0",
+  "description": "Module reflection API for nodejs",
+  "main": "start.js",
+  "scripts": {
+    "test": "node node_modules/istanbul/lib/cli.js cover node_modules/mocha/bin/_mocha test/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/131/cnyks.git"
+  },
+  "keywords": [
+    "reflection"
+  ],
+  "author": "Francois Leurent <131.js@cloudyks.org>",
+  "license": "ISC",
+  "dependencies": {
+    "nyks": "~2.0.0",
+    "mout": "~0.11.0"
+  },
+  "devDependencies": {
+    "expect.js": "^0.3.1",
+    "mocha": "^2.2.5",
+    "istanbul": "~0.3.18"
+  }
+}
