@@ -19,7 +19,10 @@ Esprima provide a way to parse the AST (and to retrieve comment) but we need a l
 foo.prototype.bar = function() /**
 * This comment is valid and can describe the function behavior
 * This syntax allow reflection API to work, as the comment will be serialized in the function body
-*/
+*/ {
+  return 43;
+
+}
 ```
 
 ## Non working patterns
