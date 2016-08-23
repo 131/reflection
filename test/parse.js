@@ -42,6 +42,22 @@ describe("Testing parsing functions", function(){
   });
 
 
+  it("should test generators & ES6 classes", function(){
+    function * a(a,b,c) {};
+
+    class c {
+      b(a, b) {return 42;}
+    }
+    var d = new c(); 
+
+    expect(Object.keys(parsefunc(a).params)).to.eql(['a', 'b', 'c']);
+    expect(Object.keys(parsefunc(d.b).params)).to.eql(['a', 'b']);
+
+  });
+
+
+  
+
   it("should test parsefunc name detection", function(){
     var a = function() {};
     var b = function

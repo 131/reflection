@@ -4,7 +4,7 @@ var filter   = require('mout/array/filter');
 var combine  = require('nyks/object/combine');
 var parsedoc = require('../lib/parsedoc');
 
-var argsSplitter = new RegExp("^function\\s+(\\S*)\\(([\\s\\S]*?)\\)\\s*(/\\*[\\s\\S]*?\\*/)?");
+var argsSplitter = new RegExp("^(?:function)?\\*?\\s*(\\S*)\\(([\\s\\S]*?)\\)\\s*(/\\*[\\s\\S]*?\\*/)?\\s*{");
 
 
 
