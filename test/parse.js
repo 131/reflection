@@ -106,8 +106,9 @@ sad */{};
 
   it("should test parsefunc args (jsdoc syntax)", function(){
 
-    var a = function(name, age) /** this is head
+    var a = function(name, big, age) /** this is head
 * @param {string} name
+* @param {boolean} [big=false]
 * @param {number} [age=42] - captain age
 **/{};
 
@@ -119,6 +120,15 @@ sad */{};
       optional: false,
       value : undefined,
     });
+
+    expect(parsed.params['big']).to.eql({
+      type : 'boolean',
+      descr : '',
+      optional: true,
+      value : false,
+    });
+
+    expect(typeof parsed.params['age'].value).to.be("number");
 
     expect(parsed.params['age']).to.eql({
       type : 'number',

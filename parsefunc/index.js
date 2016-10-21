@@ -35,6 +35,11 @@ module.exports = function(fn){
         name = tmp[0]; value = tmp[1];
       }
 
+      if(value !== undefined && type == "boolean")
+        value = !! (value && value != "false"); // && value != "f"
+      if(value !== undefined && type == "number")
+        value = Number(value);
+
       paramsDoc[name] = {type : type, descr : descr, value : value, optional : optional};
     });
 

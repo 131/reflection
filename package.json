@@ -17,12 +17,12 @@
   "author": "Francois Leurent <131.js@cloudyks.org>",
   "license": "ISC",
   "dependencies": {
-    "nyks": "^2.30.0",
-    "mout": "^1.0.0"
+    "mout": "^1.0.0",
+    "nyks": "^3.2.0"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "mocha": "^2.2.5",
-    "istanbul": "~0.3.18"
+    "istanbul": "~0.3.18",
+    "mocha": "^2.2.5"
   }
 }
