@@ -7,7 +7,7 @@ var ltrim    = require('mout/string/ltrim');
 var get      = require('mout/object/get');
 var parsedoc = require('../lib/parsedoc');
 
-var argsSplitter = new RegExp("^(?:function)?\\*?\\s*(\\S*)\\(([\\s\\S]*?)\\)\\s*(/\\*[\\s\\S]*?\\*/)?\\s*{");
+var argsSplitter = new RegExp("^(?:function)?\\*?\\s*(\\S*)\\(([\\s\\S]*?)\\)\\s*(/\\*[\\s\\S]*?\\*/)?\\s*(?:=>)?\\s*{");
 
 
 
