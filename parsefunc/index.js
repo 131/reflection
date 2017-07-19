@@ -7,7 +7,7 @@ var ltrim    = require('mout/string/ltrim');
 var get      = require('mout/object/get');
 var parsedoc = require('../lib/parsedoc');
 
-var argsSplitter = new RegExp("^(?:function)?\\*?\\s*(\\S*)\\(([\\s\\S]*?)\\)\\s*(/\\*[\\s\\S]*?\\*/)?\\s*(?:=>)?\\s*{");
+var argsSplitter = new RegExp("^(?:async function|async|function|function\\*?|\\*?)?\\s*(\\S*)\\(([\\s\\S]*?)\\)\\s*(/\\*[\\s\\S]*?\\*/)?\\s*(?:=>)?\\s*{");
 
 
 
@@ -16,7 +16,7 @@ module.exports = function(fn){
     var body = fn.toString(), params = {}, comment;
 
     if(!argsSplitter.test(body))
-      throw Error("Invalid closure");
+      throw Error(`Invalid closure ${body}`);
 
     var q = argsSplitter.exec(body);
     var paramsName = filter(q[2].split(/[,\s]+/));

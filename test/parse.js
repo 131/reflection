@@ -43,7 +43,7 @@ describe("Testing parsing functions", function(){
 
 
   it("should test generators & ES6 classes", function(){
-    function * a(a,b,c) {};
+    function        * a(a,b,c) {};
 
     class c {
       b(a, b) {return 42;}
@@ -52,6 +52,20 @@ describe("Testing parsing functions", function(){
 
     expect(Object.keys(parsefunc(a).params)).to.eql(['a', 'b', 'c']);
     expect(Object.keys(parsefunc(d.b).params)).to.eql(['a', 'b']);
+
+  });
+
+
+  it("should test async functions", function(){
+    async function a(a,b,c) {};
+
+    class d {
+      async b(a, b) {return 42;}
+    }
+    var e = new d(); 
+
+    expect(Object.keys(parsefunc(a).params)).to.eql(['a', 'b', 'c']);
+    expect(Object.keys(parsefunc(e.b).params)).to.eql(['a', 'b']);
 
   });
 
