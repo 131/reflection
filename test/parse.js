@@ -105,12 +105,13 @@ sad */{};
     var a = function() /** this is head
 * @alias foo
 * @alias bar
+* @alias ?
 **/{};
 
     var parsed = parsefunc(a).doc;
 
     expect(parsed.doc).to.eql(["this is head"]);
-    expect(parsed.args.alias.values).to.eql([['foo'], ['bar']]);
+    expect(parsed.args.alias.values).to.eql([['foo'], ['bar'], ['?']]);
 
 
   });

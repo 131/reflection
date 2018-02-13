@@ -18,7 +18,7 @@
   "license": "ISC",
   "dependencies": {
     "mout": "^1.0.0",
-    "nyks": "^3.2.0"
+    "nyks": "^4.4.0"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
