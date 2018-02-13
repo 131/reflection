@@ -1,6 +1,6 @@
 {
   "name": "reflection-js",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "Module reflection API for nodejs",
   "main": "start.js",
   "scripts": {
