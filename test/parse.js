@@ -100,7 +100,7 @@ sad */{};
   });
 
 
-  it("should test parsefunc doc", function(){
+  it("should test parsefunc doc w/alias", function(){
 
     var a = function() /** this is head
 * @alias foo

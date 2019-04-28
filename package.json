@@ -4,7 +4,9 @@
   "description": "Module reflection API for nodejs",
   "main": "start.js",
   "scripts": {
-    "test": "node node_modules/istanbul/lib/cli.js cover --report text-summary --report html --report lcov  node_modules/mocha/bin/_mocha",
+    "test": "npm run cover",
+    "mocha": "_mocha",
+    "cover": "nyc --temp-directory coverage/.nyc_output --reporter text-summary --reporter html --reporter lcov  mocha",
     "coveralls": "npm install coveralls && node ./node_modules/coveralls/bin/coveralls.js < ./coverage/lcov.info"
   },
   "repository": {
@@ -18,11 +20,11 @@
   "license": "ISC",
   "dependencies": {
     "mout": "^1.0.0",
-    "nyks": "^4.4.0"
+    "nyks": "^5.11.6"
   },
   "devDependencies": {
     "expect.js": "^0.3.1",
-    "istanbul": "~0.3.18",
-    "mocha": "^2.2.5"
+    "mocha": "^2.2.5",
+    "nyc": "^13.0.1"
   }
 }
