@@ -1,37 +1,35 @@
 "use strict";
+/*eslint no-unused-vars: 0*/
 
-var expect = require('expect.js');
+const expect = require('expect.js');
+const parsefunc = require('../parsefunc');
 
-var parsefunc = require('../parsefunc');
 
+describe("Testing parsing functions", function() {
 
-describe("Testing parsing functions", function(){
+  it("Should verify nodejs function serialization", function() {
 
-  it("Should verify nodejs function serialization", function(){
-
-      /** ca */ function /**  cb */a/**  cd */(b, /** ce */ d)/** cf **/{ /** cg **/}
-      expect(a.toString()).to.be("function a(b, /** ce */ d)/** cf **/{ /** cg **/}");
+    /** ca */ function /**  cb */a/**  cd */(b, /** ce */ d)/** cf **/ { /** cg **/}
+    expect(a.toString()).to.be("function a(b, /** ce */ d)/** cf **/ { /** cg **/}");
   });
 
+  it("should reject invalid strings", function() {
 
-
-  it("should reject invalid strings", function(){
-
-    expect(function(){
-        parsefunc(43)
+    expect(function() {
+      parsefunc(43);
     }).to.throwError('Invalid closure');
 
   });
 
 
-  it("should test parsefunc args count", function(){
-    function a() {};
-    function b(a) {};
-    function c(b, c) {};
+  it("should test parsefunc args count", function() {
+    function a() {}
+    function b(a) {}
+    function c(b, c) {}
     function d(d, e,
-    f) {};
+      f) {}
     function e(g)
-    {};
+    {}
 
     expect(Object.keys(parsefunc(a).params)).to.eql([]);
     expect(Object.keys(parsefunc(b).params)).to.eql(['a']);
@@ -42,13 +40,13 @@ describe("Testing parsing functions", function(){
   });
 
 
-  it("should test generators & ES6 classes", function(){
-    function        * a(a,b,c) {};
+  it("should test generators & ES6 classes", function() {
+    function        * a(a, b, c) {}
 
-    class c {
+    class C {
       b(a, b) {return 42;}
     }
-    var d = new c(); 
+    var d = new C();
 
     expect(Object.keys(parsefunc(a).params)).to.eql(['a', 'b', 'c']);
     expect(Object.keys(parsefunc(d.b).params)).to.eql(['a', 'b']);
@@ -56,13 +54,13 @@ describe("Testing parsing functions", function(){
   });
 
 
-  it("should test async functions", function(){
-    async function a(a,b,c) {};
+  it("should test async functions", function() {
+    async function a(a, b, c) {}
 
-    class d {
+    class D {
       async b(a, b) {return 42;}
     }
-    var e = new d(); 
+    var e = new D();
 
     expect(Object.keys(parsefunc(a).params)).to.eql(['a', 'b', 'c']);
     expect(Object.keys(parsefunc(e.b).params)).to.eql(['a', 'b']);
@@ -70,37 +68,33 @@ describe("Testing parsing functions", function(){
   });
 
 
-  
 
-  it("should test parsefunc name detection", function(){
-    var a = function() {};
-    var b = function
-    () {};
-    function c() {};
-    function d
-    () {};
 
-    expect(parsefunc(a).name).to.be("");
-    expect(parsefunc(b).name).to.be("");
+  it("should test parsefunc name detection", function() {
+    function c() {}
+    function d() {}
+
     expect(parsefunc(c).name).to.be("c");
     expect(parsefunc(d).name).to.be("d");
 
   });
 
+  it("should test parsefunc doc", function() {
 
-  it("should test parsefunc doc", function(){
     var a = function() /** all is fine */{};
-    expect(parsefunc(a).doc.doc).to.eql([ 'all is fine ' ]);
+    expect(parsefunc(a).doc.doc).to.eql(['all is fine']);
 
 
-    var a = function() /** all is
+    a = function() /** all is
 sad */{};
+
     expect(parsefunc(a).doc.doc).to.eql(['all is']);
 
   });
 
 
-  it("should test parsefunc doc w/alias", function(){
+
+  it("should test parsefunc doc w/alias", function() {
 
     var a = function() /** this is head
 * @alias foo
@@ -119,7 +113,7 @@ sad */{};
 
 
 
-  it("should test parsefunc args (jsdoc syntax)", function(){
+  it("should test parsefunc args (jsdoc syntax)", function() {
 
     var a = function(name, big, age) /** this is head
 * @param {string} name
@@ -132,14 +126,14 @@ sad */{};
     expect(parsed.params['name']).to.eql({
       type : 'string',
       descr : '',
-      optional: false,
+      optional : false,
       value : undefined,
     });
 
     expect(parsed.params['big']).to.eql({
       type : 'boolean',
       descr : '',
-      optional: true,
+      optional : true,
       value : false,
     });
 
@@ -148,7 +142,7 @@ sad */{};
     expect(parsed.params['age']).to.eql({
       type : 'number',
       descr : 'captain age',
-      optional: true,
+      optional : true,
       value : 42,
     });
 
