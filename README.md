@@ -1,14 +1,13 @@
 # Reflection / parsefunc is a reflection API for nodejs
 
-[![Build Status](https://travis-ci.org/131/reflection.svg?branch=master)](https://travis-ci.org/131/reflection)
+[![Build Status](https://travis-ci.com/131/reflection.svg?branch=master)](https://travis-ci.org/131/reflection)
 [![Coverage Status](https://coveralls.io/repos/github/131/reflection/badge.svg?branch=master)](https://coveralls.io/github/131/reflection?branch=master)
 [![NPM version](https://img.shields.io/npm/v/reflection-js.svg)](https://www.npmjs.com/package/reflection-js)
 
 
 
-
 # Motivation
-This is a very simple reflection API for javascript functions build on esprima.
+This is a very simple reflection API for javascript functions build on acorn.
 
 
 # PHPdoc/JSdoc
@@ -55,6 +54,4 @@ prime({
 ```
 
 
-# Esprima and comment parsing
-  TODO : use esprima for 
 
