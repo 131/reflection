@@ -6,9 +6,41 @@
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
 
 # Motivation
-This is a very simple reflection API for javascript functions build on [acorn](https://www.npmjs.com/package/acorn).  [reflection-js](https://github.com/131/reflection) is mostly designed to fit [cnyks](https://github.com/131/reflection)'s needs.
+This is a very simple reflection API for javascript functions build on [acorn](https://www.npmjs.com/package/acorn).  [reflection-js](https://github.com/131/reflection) is mostly designed to fit [cnyks](https://github.com/131/cnyks)'s needs.
 
 
+
+
+# PHPdoc/JSdoc
+PHPdoc is part of PHP reflection API, that is, function described with this syntax can access their own comment.
+There is no standard way to attach a comment to a function in javascript.
+Esprima provide a way to parse the AST (and to retrieve comment) but we need a little more.
+
+... enter the JSdoc syntax !
+
+
+# Attach a JSdoc to a javascript function
+## JSdoc pattern
+
+```
+foo.prototype.bar = function() /**
+* This comment is valid and can describe the function behavior
+* This syntax allow reflection API to work, as the comment will be serialized in the function body
+*/ {
+  return 43;
+}
+
+
+class Bar {
+  async static bar() /**
+  * This comment is valid and can describe the function behavior
+  * This syntax allow reflection API to work, as the comment will be serialized in the function body
+  */ {
+    return 43;
+  }
+
+}
+```
 # Usage
 ```
 const parsefunc = require('reflection-js/parsefunc');
@@ -43,37 +75,6 @@ console.log(parsefunc(heavyComputation));
     "This function computer bar"
   ],
   "jsdoc": // raw comment string
-}
-```
-
-# PHPdoc/JSdoc
-PHPdoc is part of PHP reflection API, that is, function described with this syntax can access their own comment.
-There is no standard way to attach a comment to a function in javascript.
-Esprima provide a way to parse the AST (and to retrieve comment) but we need a little more.
-
-... enter the JSdoc syntax !
-
-
-# Attach a JSdoc to a javascript function
-## JSdoc pattern
-
-```
-foo.prototype.bar = function() /**
-* This comment is valid and can describe the function behavior
-* This syntax allow reflection API to work, as the comment will be serialized in the function body
-*/ {
-  return 43;
-}
-
-
-class Bar {
-  async static bar() /**
-  * This comment is valid and can describe the function behavior
-  * This syntax allow reflection API to work, as the comment will be serialized in the function body
-  */ {
-    return 43;
-  }
-
 }
 ```
 
