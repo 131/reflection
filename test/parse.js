@@ -110,6 +110,17 @@ sad */{};
 
     expect(parsefunc(a).doc).to.eql(['all is']);
 
+
+
+    a = function(name, age) /**
+ * @param {string} [name=martin] - name to greet with
+ * @param {number} [age=10] - age to greet with
+ */ {};
+
+    expect(parsefunc(a).doc).to.eql([]);
+    expect(Object.keys(parsefunc(a).params)).to.eql(["name", "age"]);
+
+
   });
 
 

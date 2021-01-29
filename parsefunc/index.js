@@ -38,6 +38,7 @@ module.exports = function(fn) {
   var {blocs, doc} = parsedoc(jsdoc);
   var paramsDoc = {};
 
+
   (get(blocs, 'param.values') || []).forEach(function(line) {
     var type = trim(line.shift(), ['{', '}']);
     var name = line.shift();
