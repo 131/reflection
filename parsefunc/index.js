@@ -14,14 +14,17 @@ const parsedoc = require('../lib/parsedoc');
 
 
 module.exports = function(fn) {
-  var body = fn.toString(), params = {}, comments = [], tokens = [], parsed;
+  var body = fn.toString(),
+    name = fn.name;
+
+  let params = {}, comments = [], tokens = [], parsed;
 
   body = body.replace(/^.*?\(/, 'async function * abb(');
 
   try {
     parsed = acorn.parse(body, {onComment : comments, ecmaVersion : '2020', onToken : tokens});
     parsed = parsed.body[0];
-  } catch(err) { console.log(err, body, fn); process.exit(); }
+  } catch(err) { }
 
   if(!parsed || parsed.type != "FunctionDeclaration")
     throw `Invalid closure expression '${body}'`;
@@ -30,12 +33,12 @@ module.exports = function(fn) {
   // fn () /** here **/ {
   let bloc = tokens.indexOf(tokens.find(token => token.start == parsed.body.start));
   let start = tokens[bloc - 1].end, end = parsed.body.start;
-  let doc = comments.find(bloc => bloc.start >= start && bloc.end <= end) || {value : ""};
+  let jsdoc = (comments.find(bloc => bloc.start >= start && bloc.end <= end) || {}).value || "";
 
-  var parseddoc = parsedoc(doc.value);
+  var {blocs, doc} = parsedoc(jsdoc);
   var paramsDoc = {};
 
-  (get(parseddoc, 'args.param.values') || []).forEach(function(line) {
+  (get(blocs, 'param.values') || []).forEach(function(line) {
     var type = trim(line.shift(), ['{', '}']);
     var name = line.shift();
     var descr = trim(ltrim(line.join(" "), "-"));
@@ -57,20 +60,12 @@ module.exports = function(fn) {
 
   for(var arg of parsed.params) {
     if(arg.type == "Identifier")
-      params[arg.name] = paramsDoc[arg.name] || {descr : doc.value};
+      params[arg.name] = paramsDoc[arg.name] || {};
     if(arg.type == "AssignmentPattern") {
       let value =  (arg.right.type == "Literal") ? arg.right.value : undefined;
-      params[arg.left.name] = paramsDoc[arg.left.name] || {descr : doc.value, optional : true, value};
+      params[arg.left.name] = paramsDoc[arg.left.name] || {optional : true, value};
     }
   }
 
-
-  var res = {
-    name   : fn.name,
-    params : params,
-    doc    : parseddoc,
-    rawdoc : doc.value,
-  };
-
-  return res;
+  return {name, params, blocs, doc, jsdoc};
 };

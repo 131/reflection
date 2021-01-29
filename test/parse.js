@@ -68,6 +68,26 @@ describe("Testing parsing functions", function() {
   });
 
 
+  it("should test optional args ", function() {
+
+
+    class D {
+      async b(a, b, c = 1, d = [1, 2, 3]) {
+        return 42;
+      }
+    }
+    var e = new D();
+
+    expect(parsefunc(e.b).params).to.eql({
+      a : {},
+      b : {},
+      c : { optional : true, value : 1 },
+      d : { optional : true, value : undefined} // complex values cannot be serialized
+    });
+
+  });
+
+
 
 
   it("should test parsefunc name detection", function() {
@@ -82,13 +102,13 @@ describe("Testing parsing functions", function() {
   it("should test parsefunc doc", function() {
 
     var a = function() /** all is fine */{};
-    expect(parsefunc(a).doc.doc).to.eql(['all is fine']);
+    expect(parsefunc(a).doc).to.eql(['all is fine']);
 
 
     a = function() /** all is
 sad */{};
 
-    expect(parsefunc(a).doc.doc).to.eql(['all is']);
+    expect(parsefunc(a).doc).to.eql(['all is']);
 
   });
 
@@ -102,10 +122,10 @@ sad */{};
 * @alias ?
 **/{};
 
-    var parsed = parsefunc(a).doc;
+    var parsed = parsefunc(a);
 
     expect(parsed.doc).to.eql(["this is head"]);
-    expect(parsed.args.alias.values).to.eql([['foo'], ['bar'], ['?']]);
+    expect(parsed.blocs.alias.values).to.eql([['foo'], ['bar'], ['?']]);
 
 
   });

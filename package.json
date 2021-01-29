@@ -12,12 +12,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/131/cnyks.git"
+    "url": "git://github.com/131/reflection.git"
   },
   "keywords": [
     "reflection"
   ],
-  "author": "Francois Leurent <131.js@cloudyks.org>",
+  "author": "Francois Leurent <131.code@leurent.email>",
   "license": "ISC",
   "dependencies": {
     "acorn": "^8.0.5",
