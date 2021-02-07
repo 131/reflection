@@ -20,6 +20,7 @@ module.exports = function(fn) {
   let params = {}, comments = [], tokens = [], parsed;
 
   body = body.replace(/^.*?\(/, 'async function * abb(');
+  body = body.replace(/\{\s+\[native code\]\s+\}$/, '{}');
 
   try {
     parsed = acorn.parse(body, {onComment : comments, ecmaVersion : '2020', onToken : tokens});

@@ -67,6 +67,13 @@ describe("Testing parsing functions", function() {
 
   });
 
+  it("should test native ", function() {
+
+    var e = Function.prototype;
+
+    expect(Object.keys(parsefunc(e).params)).to.eql([]);
+  });
+
 
   it("should test optional args ", function() {
 
