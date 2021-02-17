@@ -21,6 +21,7 @@ module.exports = function(fn) {
 
   body = body.replace(/^.*?\(/, 'async function * abb(');
   body = body.replace(/\{\s+\[native code\]\s+\}$/, '{}');
+  body = body.replace(/super\.?/, '');
 
   try {
     parsed = acorn.parse(body, {onComment : comments, ecmaVersion : '2020', onToken : tokens});

@@ -43,8 +43,13 @@ describe("Testing parsing functions", function() {
   it("should test generators & ES6 classes", function() {
     function        * a(a, b, c) {}
 
-    class C {
-      b(a, b) {return 42;}
+    class A { }
+
+    class C extends A {
+      b(a, b) {
+        super.b();
+        return 42;
+      }
     }
     var d = new C();
 
