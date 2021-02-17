@@ -7,10 +7,15 @@ const parsefunc = require('../parsefunc');
 
 describe("Testing parsing functions", function() {
 
-  it("Should verify nodejs function serialization", function() {
+  let [major] = process.versions.node.split('.');
+  it(`Should verify nodejs (v${major}) function serialization`, function() {
 
     /** ca */ function /**  cb */a/**  cd */(b, /** ce */ d)/** cf **/ { /** cg **/}
-    expect(a.toString()).to.be("function a(b, /** ce */ d)/** cf **/ { /** cg **/}");
+
+    let after8 = "function /**  cb */a/**  cd */(b, /** ce */ d)/** cf **/ { /** cg **/}";
+    let to8    = "function a(b, /** ce */ d)/** cf **/ { /** cg **/}";
+
+    expect(a.toString()).to.be(major > 8 ? after8 : to8);
   });
 
   it("should reject invalid strings", function() {
@@ -46,6 +51,10 @@ describe("Testing parsing functions", function() {
     class A { }
 
     class C extends A {
+      constructor(a, b, c) {
+        super();
+      }
+
       b(a, b) {
         super.b();
         return 42;
@@ -55,6 +64,17 @@ describe("Testing parsing functions", function() {
 
     expect(Object.keys(parsefunc(a).params)).to.eql(['a', 'b', 'c']);
     expect(Object.keys(parsefunc(d.b).params)).to.eql(['a', 'b']);
+
+
+    expect(function() {
+      parsefunc(C);
+    }).to.throwError('Cannot parse non function');
+
+
+    expect(function() {
+      parsefunc(d);
+    }).to.throwError('Cannot parse non function');
+
 
   });
 

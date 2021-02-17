@@ -14,21 +14,32 @@ const parsedoc = require('../lib/parsedoc');
 
 
 module.exports = function(fn) {
+  if(typeof fn !== "function")
+    throw `Invalid closure type`;
+
   var body = fn.toString(),
     name = fn.name;
 
+
+  const isClass = /^\s*class\s+/.test(body.toString());
+
+  //no sane way to get class B extends A {} length or arguments
+  if(isClass)
+    throw `Invalid closure, no support for class`;
+
   let params = {}, comments = [], tokens = [], parsed;
 
-  body = body.replace(/^.*?\(/, 'async function * abb(');
-  body = body.replace(/\{\s+\[native code\]\s+\}$/, '{}');
-  body = body.replace(/super\.?/, '');
+  //wrapping in async generator method to allow yield/await/super
+  body = body.replace(/^.*?\(/, 'class A extends B { async * _(') + '}';
+  body = body.replace(/\{\s+\[native code\]\s+\}/, '{}');
 
   try {
     parsed = acorn.parse(body, {onComment : comments, ecmaVersion : '2020', onToken : tokens});
-    parsed = parsed.body[0];
+    parsed = parsed.body[0].body.body[0].value;
   } catch(err) { }
 
-  if(!parsed || parsed.type != "FunctionDeclaration")
+  /* istanbul ignore next */
+  if(!parsed || parsed.type != "FunctionExpression")
     throw `Invalid closure expression '${body}'`;
 
   // main func comment is between the end token of parameters and start bloc of the
