@@ -68,12 +68,16 @@ describe("Testing parsing functions", function() {
 
     expect(function() {
       parsefunc(C);
-    }).to.throwError('Cannot parse non function');
+    }).to.throwError(/Invalid closure, no support for class/);
+
+    expect(function() {
+      parsefunc(class{});
+    }).to.throwError(/Invalid closure, no support for class/);
 
 
     expect(function() {
       parsefunc(d);
-    }).to.throwError('Cannot parse non function');
+    }).to.throwError(/Invalid closure type/);
 
 
   });

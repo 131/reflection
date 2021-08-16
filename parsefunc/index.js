@@ -21,7 +21,7 @@ module.exports = function(fn) {
     name = fn.name;
 
 
-  const isClass = /^\s*class\s+/.test(body.toString());
+  const isClass = /^\s*class(?:\s+|{)/.test(body.toString());
 
   //no sane way to get class B extends A {} length or arguments
   if(isClass)
