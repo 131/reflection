@@ -1,6 +1,6 @@
 # Reflection / parsefunc is a reflection API for nodejs
 
-[![Build Status](https://travis-ci.com/131/reflection.svg?branch=master)](https://travis-ci.com/131/reflection)
+[![Build Status](https://github.com/131/reflection/actions/workflows/tests.yml/badge.svg?branch=master)](https://github.com/131/reflection/actions/workflows/tests.yml)
 [![Coverage Status](https://coveralls.io/repos/github/131/reflection/badge.svg?branch=master)](https://coveralls.io/github/131/reflection?branch=master)
 [![NPM version](https://img.shields.io/npm/v/reflection-js.svg)](https://www.npmjs.com/package/reflection-js)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](http://opensource.org/licenses/MIT)
