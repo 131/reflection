@@ -75,6 +75,8 @@ module.exports = function(fn) {
   for(var arg of parsed.params) {
     if(arg.type == "Identifier")
       params[arg.name] = paramsDoc[arg.name] || {};
+    if(arg.type == "RestElement" && arg.argument.type == "Identifier")
+      params[arg.argument.name] = paramsDoc[arg.argument.name] || {};
     if(arg.type == "AssignmentPattern") {
       let value =  (arg.right.type == "Literal") ? arg.right.value : undefined;
       params[arg.left.name] = paramsDoc[arg.left.name] || {optional : true, value};

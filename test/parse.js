@@ -35,12 +35,14 @@ describe("Testing parsing functions", function() {
       f) {}
     function e(g)
     {}
+    function f(a, ...b) {}
 
     expect(Object.keys(parsefunc(a).params)).to.eql([]);
     expect(Object.keys(parsefunc(b).params)).to.eql(['a']);
     expect(Object.keys(parsefunc(c).params)).to.eql(['b', 'c']);
     expect(Object.keys(parsefunc(d).params)).to.eql(['d', 'e', 'f']);
     expect(Object.keys(parsefunc(e).params)).to.eql(['g']);
+    expect(Object.keys(parsefunc(f).params)).to.eql(['a', 'b']);
 
   });
 
