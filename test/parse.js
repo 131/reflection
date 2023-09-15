@@ -47,6 +47,7 @@ describe("Testing parsing functions", function() {
   });
 
 
+
   it("should test generators & ES6 classes", function() {
     function        * a(a, b, c) {}
 
@@ -123,6 +124,13 @@ describe("Testing parsing functions", function() {
       d : { optional : true, value : undefined} // complex values cannot be serialized
     });
 
+  });
+
+
+  it("should complex args", function() {
+    function b({a}, entrypoint = "hi") {}
+
+    expect(Object.keys(parsefunc(b).params)).to.eql(['', 'entrypoint']);
   });
 
 

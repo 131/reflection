@@ -33,6 +33,7 @@ module.exports = function(fn) {
   body = body.replace(/^.*?\(/, 'class A extends B { async * _(') + '}';
   body = body.replace(/\{\s+\[native code\]\s+\}/, '{}');
 
+
   try {
     parsed = acorn.parse(body, {onComment : comments, ecmaVersion : '2020', onToken : tokens});
     parsed = parsed.body[0].body.body[0].value;
@@ -73,6 +74,8 @@ module.exports = function(fn) {
   });
 
   for(var arg of parsed.params) {
+    if(arg.type == "ObjectPattern") //no name, only a default placeholder value, for now
+      params[''] = {optional : true, value : {}};
     if(arg.type == "Identifier")
       params[arg.name] = paramsDoc[arg.name] || {};
     if(arg.type == "RestElement" && arg.argument.type == "Identifier")
