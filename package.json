@@ -20,7 +20,8 @@
   "author": "Francois Leurent <131.code@leurent.email>",
   "license": "ISC",
   "dependencies": {
-    "acorn": "^8.0.5",
+    "acorn": "^8.11.3",
+    "acorn-loose": "^8.4.0",
     "mout": "^1.0.0",
     "nyks": "^6.1.5"
   },

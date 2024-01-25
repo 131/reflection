@@ -86,6 +86,15 @@ describe("Testing parsing functions", function() {
   });
 
 
+  it("should self bound function", function() {
+    let a = (a) => {};
+
+    expect(Object.keys(parsefunc(a).params)).to.eql(['a']);
+
+  });
+
+
+
   it("should test async functions", function() {
     async function a(a, b, c) {}
 

@@ -1,6 +1,7 @@
 "use strict";
 
 const acorn  = require('acorn');
+const acornLoose  = require('acorn-loose');
 
 const trim     = require('mout/string/trim');
 const ltrim    = require('mout/string/ltrim');
@@ -29,18 +30,26 @@ module.exports = function(fn) {
 
   let params = {}, comments = [], tokens = [], parsed;
 
-  //wrapping in async generator method to allow yield/await/super
-  body = body.replace(/^.*?\(/, 'class A extends B { async * _(') + '}';
+  //wrapping in async generator method to allow yield/await
+  body = body.replace(/^.*?\(/, 'async function * _(');
   body = body.replace(/\{\s+\[native code\]\s+\}/, '{}');
 
-
+  let opts = {ecmaVersion : '2020', allowSuperOutsideMethod : true};
   try {
-    parsed = acorn.parse(body, {onComment : comments, ecmaVersion : '2020', onToken : tokens});
-    parsed = parsed.body[0].body.body[0].value;
-  } catch(err) { }
+    parsed = acorn.parse(body, {...opts, onComment : comments, onToken : tokens});
+    parsed = parsed.body[0];
+  } catch(err) {
+    // trying loose parser (bound function ?)
+    try {
+      parsed = acornLoose.parse(body, {...opts, onComment : comments, onToken : tokens});
+      parsed = parsed.body[0];
+    } catch(err) {
+      console.log("Parser failure", err);
+    }
+  }
 
   /* istanbul ignore next */
-  if(!parsed || parsed.type != "FunctionExpression")
+  if(!parsed || !["FunctionExpression", "FunctionDeclaration"].includes(parsed.type))
     throw `Invalid closure expression '${body}'`;
 
   // main func comment is between the end token of parameters and start bloc of the
